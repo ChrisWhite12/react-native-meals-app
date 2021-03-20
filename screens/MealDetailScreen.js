@@ -1,20 +1,48 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { MEALS } from "../data/dummy-data";
 
-const MealDetailScreen = props => {
+import CustomHeaderButton from '../components/CustomHeaderButton'
+
+const MealDetailScreen = (props) => {
+    // console.log(mealInfo)
     return (
         <View style={styles.screen}>
-            <Text>Meal Detail Screen</Text>
+            <Text>Meal Detail</Text>
         </View>
-    )
-}
-
+    );
+    
+};
+    
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});
 
-export default MealDetailScreen     
+MealDetailScreen.navigationOptions = (navigationData) => {
+    const mealId = navigationData.navigation.getParam("mealId");
+    const mealInfo = MEALS.find((el) => el.id === mealId);
+    return {
+        headerTitle: mealInfo.title,
+        headerRight: () => {
+            return  <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                        <Item title="favorite" iconName="star" onPress={() => {
+                            console.log('marked')
+                        }} />
+                    </HeaderButtons>
+        }
+        ,
+    };
+}
+
+
+{/* <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item title="favorite" iconName="ios-star" onPress={() => {
+                console.log('marked')
+            }} />
+        </HeaderButtons> */}
+export default MealDetailScreen;

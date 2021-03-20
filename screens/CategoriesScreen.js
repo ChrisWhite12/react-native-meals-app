@@ -1,24 +1,41 @@
-import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import React from "react";
+import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import Colors from "../constants/Colors";
 
-const CategoriesScreen = props => {
+import { CATEGORIES } from "../data/dummy-data";
+
+import CategoryGridTile from "../components/CategoryGridTile";
+
+const CategoriesScreen = (props) => {
+    const renderGridItem = (itemData) => {
+        return (
+        <CategoryGridTile
+            title={itemData.item.title}
+            color={itemData.item.color}
+            onSelectMeal={() => {
+            props.navigation.navigate({
+                routeName: "CategoryMeals",
+                params: {
+                categoryId: itemData.item.id,
+                },
+            });
+            }}
+        />
+        );
+    };
 
     return (
-        <View style={styles.screen}>
-            <Text>Categories Screen</Text>
-            <Button title="MealsScreen" onPress={() => {
-                props.navigation.navigate({routeName: 'CategoryMeals'})
-            }} />
-        </View>
-    )
-}
+        <FlatList data={CATEGORIES} renderItem={renderGridItem} numColumns={2} />
+    );
+};
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});
 
-export default CategoriesScreen     
+export default CategoriesScreen;
