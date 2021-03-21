@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native'
+import Colors from '../constants/Colors'
 
 const CategoryGridTile = props => {
     return (
@@ -16,15 +17,17 @@ const CategoryGridTile = props => {
 const styles = StyleSheet.create({
     gridItem: {
         flex: 1,
-        margin: 15,
-        height: 100
+        margin: 5,
+        height: 100,
+        overflow: 'hidden',
+        elevation: 5,
     },
     gridBack: {
         flex:1,
         borderRadius: 20,
         borderWidth: 2,
-        borderColor: "#a33",
-        elevation: 5,
+        borderColor: Colors.secondaryColor,
+        
         padding: 15,
         justifyContent: 'center'
     },
