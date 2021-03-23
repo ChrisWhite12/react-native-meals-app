@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { HeaderButton } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -13,9 +13,11 @@ const CustomHeaderButton = (props) => {
         // iconSize={23}
         // color="white"
         // />
-        <View style={styles.headerButton}>
-            <Ionicons name={props.name} size={32} color="white" />
-        </View>
+        <TouchableOpacity onPress={props.onPress}>
+            <View style={styles.headerButton}>
+                <Ionicons name={props.name} size={32} color="white" />
+            </View>
+        </TouchableOpacity>
     );
 };
 

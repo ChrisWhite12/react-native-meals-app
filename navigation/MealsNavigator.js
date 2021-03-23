@@ -18,8 +18,7 @@ const MealsNavigator = createStackNavigator({
     Categories: {
         screen: CategoriesScreen,
         navigationOptions: {
-            headerTitle: 'Meal Categories',
-            headerLeft: <Ionicons name="menu" size={20} color='white'/>
+            headerTitle: 'Meal Categories'
         }
     },
     CategoryMeals: {
@@ -85,14 +84,34 @@ const filterNavigator = createStackNavigator({
     Filters: {
         screen: FiltersScreen,
         navigationOptions: {
-            headerTitle: "Filter Options"
+            headerTitle: "Filter Options",
+            headerStyle: {
+            backgroundColor: Colors.primaryColor
         }
+        }
+        
     }
-})
+}
+)
 
 const MainNavigator = createDrawerNavigator({
-    MealsFavs: MealsTabNavigator,
-    Filters: filterNavigator
+    MealsFavs: {
+        screen: MealsTabNavigator,
+        navigationOptions: {
+            drawerLabel: 'Meals!'
+        }
+    },
+    Filters: {
+        screen: filterNavigator,
+        navigationOptions: {
+            drawerLabel: 'Filters!'
+        }
+    }
+},
+{
+    contentOptions: {
+        activeTintColor: Colors.secondaryColor
+    }
 })
 
 export default createAppContainer(MainNavigator)

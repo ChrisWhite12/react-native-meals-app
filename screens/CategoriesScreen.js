@@ -6,6 +6,7 @@ import Colors from "../constants/Colors";
 import { CATEGORIES } from "../data/dummy-data";
 
 import CategoryGridTile from "../components/CategoryGridTile";
+import CustomHeaderButton from '../components/CustomHeaderButton'
 
 const CategoriesScreen = (props) => {
     const renderGridItem = (itemData) => {
@@ -37,5 +38,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 });
+
+CategoriesScreen.navigationOptions = navigationData => {
+    return {
+        headerLeft: (
+            <CustomHeaderButton name="menu" onPress={()=> {
+                navigationData.navigation.toggleDrawer()
+            }}/>
+        )
+    }
+}
 
 export default CategoriesScreen;
