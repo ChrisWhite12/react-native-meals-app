@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, ImageBackground, ScrollView} from "react-native";
-import { MEALS } from "../data/dummy-data";
 
 import CustomHeaderButton from '../components/CustomHeaderButton'
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleFavorite } from "../store/actions/meals";
 
 const MealDetailScreen = (props) => {
+
     const mealId = props.navigation.getParam("mealId");
-    const mealInfo = MEALS.find((el) => el.id === mealId);
+    console.log('mealDetail mealId', mealId)
+
+    const availMeals = useSelector((state) => state.meals.allMeals )
+
+    const mealInfo = availMeals.find((meal) => meal.id === mealId);
+    const isFavoriteMeal = useSelector((state) => state.meals.favMeals.find(meal => meal.id === mealId))
+    console.log(mealInfo.title)
+    console.log(availMeals.find((meal) => meal.id === 'm7').title)
+
+    const dispatch = useDispatch()
+
+    const toggleFavHandler = useCallback(() => {
+        console.log('toggle - ', mealId)
+        dispatch(toggleFavorite(mealId))
+    },[dispatch, mealId])
+
+    useEffect(() => {
+        props.navigation.setParams({toggleFav: toggleFavHandler})
+    },[toggleFavHandler])
+
+    useEffect(() => {
+        props.navigation.setParams({isFav: isFavoriteMeal})
+    },[isFavoriteMeal])
 
     const checkDietary = (val) => {
         return val ? <Ionicons name='checkmark-circle' size={20} color='green' /> : <Ionicons name='close-circle' size={20} color='red' />
@@ -129,17 +153,16 @@ const styles = StyleSheet.create({
 });
 
 MealDetailScreen.navigationOptions = (navigationData) => {
-    const mealId = navigationData.navigation.getParam("mealId");
-    const mealInfo = MEALS.find((el) => el.id === mealId);
+    const mealTitle = navigationData.navigation.getParam('mealTitle')
+    // const mealInfo = MEALS.find((el) => el.id === mealId);
+    const toggleFavorite = navigationData.navigation.getParam('toggleFav')
+    const isFavorite = navigationData.navigation.getParam('isFav')
 
     return {
-        headerTitle: mealInfo.title,
+        headerTitle: mealTitle,
         headerRight: () => {
             return  (
-            <CustomHeaderButton name="ios-star-outline" onPress={() => {
-                console.log('fav')
-            }}/>
-
+                <CustomHeaderButton name={isFavorite ? "ios-star" : "ios-star-outline"} onPress={toggleFavorite}/>
             )
         }
         ,
