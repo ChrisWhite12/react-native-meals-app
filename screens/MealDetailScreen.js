@@ -8,20 +8,14 @@ import { toggleFavorite } from "../store/actions/meals";
 
 const MealDetailScreen = (props) => {
 
-    const mealId = props.navigation.getParam("mealId");
-    console.log('mealDetail mealId', mealId)
-
     const availMeals = useSelector((state) => state.meals.allMeals )
-
+    const mealId = props.navigation.getParam("mealId");
     const mealInfo = availMeals.find((meal) => meal.id === mealId);
-    const isFavoriteMeal = useSelector((state) => state.meals.favMeals.find(meal => meal.id === mealId))
-    console.log(mealInfo.title)
-    console.log(availMeals.find((meal) => meal.id === 'm7').title)
+    const isFavoriteMeal = useSelector((state) => state.meals.favMeals.some(meal => meal.id === mealId))
 
     const dispatch = useDispatch()
 
     const toggleFavHandler = useCallback(() => {
-        console.log('toggle - ', mealId)
         dispatch(toggleFavorite(mealId))
     },[dispatch, mealId])
 

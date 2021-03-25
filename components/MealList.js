@@ -8,7 +8,7 @@ const MealList = props => {
     const favoriteMeals = useSelector(state => state.meals.favMeals)
 
     const renderMealItem = (itemData) => {
-        const isFav = favoriteMeals.find(meal => meal.id = itemData.item.id)
+        const isFav = favoriteMeals.some(meal => meal.id === itemData.item.id)  //some or find
         return (
         <MealItem
             title={itemData.item.title}
